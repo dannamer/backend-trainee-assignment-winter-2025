@@ -72,7 +72,7 @@ func main() {
 
 	log.WithContext(ctx).Info("server start")
 
-	if err := http.ListenAndServe(fmt.Sprintf("192.168.0.111:%s", config.HttpPort()), server); err != nil {
+	if err := http.ListenAndServe(fmt.Sprintf(":%s", config.HttpPort()), server); err != nil {
 		log.WithContext(ctx).WithError(err).Error("failed to start server")
 		os.Exit(1)
 	}

@@ -52,7 +52,7 @@ func New(url string, opts ...Option) (*Postgres, error) {
 		return nil, fmt.Errorf("pgdb - New - pgxpool.ParseConfig: %w", err)
 	}
 
-	poolConfig.MaxConns = int32(pg.maxPoolSize)
+	// poolConfig.MaxConns = int32(pg.maxPoolSize)
 
 	var pool *pgxpool.Pool
 	for pg.connAttempts > 0 {
