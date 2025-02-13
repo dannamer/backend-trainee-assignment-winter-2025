@@ -10,4 +10,6 @@ var (
 	ErrInternal          = errors.New("internal server error")
 	ErrInsufficientFound = errors.New("insufficient funds")
 	ErrMerchNotFound     = errors.New("merch item not found")
+	ErrUserNotFound      = errors.New("user not found")
+	ErrSelfTransfer      = errors.New("self-transfer is not allowed")
 )

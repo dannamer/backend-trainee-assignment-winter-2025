@@ -6,73 +6,73 @@ info:
 servers:
   - url: http://localhost:8080
 
-# security:
-#   - BearerAuth: []
+security:
+  - BearerAuth: []
 
 paths:
-  # /api/info:
-  #   get:
-  #     summary: Получить информацию о монетах, инвентаре и истории транзакций.
-  #     security:
-  #       - BearerAuth: []
-  #     responses:
-  #       '200':
-  #         description: Успешный ответ.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/InfoResponse'
-  #       '400':
-  #         description: Неверный запрос.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ErrorResponse'
-  #       '401':
-  #         description: Неавторизован.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ErrorResponse'
-  #       '500':
-  #         description: Внутренняя ошибка сервера.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ErrorResponse'
+  /api/info:
+    get:
+      summary: Получить информацию о монетах, инвентаре и истории транзакций.
+      security:
+        - BearerAuth: []
+      responses:
+        '200':
+          description: Успешный ответ.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InfoResponse'
+        '400':
+          description: Неверный запрос.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Неавторизован.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
-  # /api/sendCoin:
-  #   post:
-  #     summary: Отправить монеты другому пользователю.
-  #     security:
-  #       - BearerAuth: []
-  #     requestBody:
-  #       required: true
-  #       content:
-  #         application/json:
-  #           schema:
-  #             $ref: '#/components/schemas/SendCoinRequest'
-  #     responses:
-  #       '200':
-  #         description: Успешный ответ.
-  #       '400':
-  #         description: Неверный запрос.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ErrorResponse'
-  #       '401':
-  #         description: Неавторизован.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ErrorResponse'
-  #       '500':
-  #         description: Внутренняя ошибка сервера.
-  #         content:
-  #           application/json:
-  #             schema:
-  #               $ref: '#/components/schemas/ErrorResponse'
+  /api/sendCoin:
+    post:
+      summary: Отправить монеты другому пользователю.
+      security:
+        - BearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendCoinRequest'
+      responses:
+        '200':
+          description: Успешный ответ.
+        '400':
+          description: Неверный запрос.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '401':
+          description: Неавторизован.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '500':
+          description: Внутренняя ошибка сервера.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
 
   /api/buy/{item}:
     get:

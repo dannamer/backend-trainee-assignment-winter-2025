@@ -4,8 +4,8 @@ CREATE TABLE IF NOT EXISTS merch_store (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     item VARCHAR(255) UNIQUE NOT NULL,
     price DECIMAL(10,2) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP DEFAULT NOW() NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 INSERT INTO merch_store (item, price) 
@@ -26,28 +26,48 @@ CREATE TABLE IF NOT EXISTS users (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     username VARCHAR(255) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP DEFAULT NOW() NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS wallet (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
     balance DECIMAL(10,2) NOT NULL DEFAULT 1000.00 CHECK (balance >= 0),
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP DEFAULT NOW() NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS transactions (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    sender_id UUID REFERENCES users(id) ON DELETE SET NULL, -- Кто отправил (NULL если пополнение)
+    sender_id UUID REFERENCES users(id) ON DELETE CASCADE, -- Кто отправил (NULL если пополнение)
     receiver_id UUID REFERENCES users(id) ON DELETE CASCADE, -- Кто получил
     amount DECIMAL(10,2) NOT NULL CHECK (amount > 0), -- Сумма перевода/пополнения
-    transaction_type VARCHAR(10) NOT NULL CHECK (transaction_type IN ('transfer', 'deposit')), -- Только переводы и пополнения
-    created_at TIMESTAMP DEFAULT NOW() NOT NULL
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 SELECT 
+    t.receiver_id, 
+    u.username AS sender_username
+FROM transactions t
+JOIN users u ON u.id = t.sender_id
+WHERE 'b7b245bd-965e-466d-9652-5fcece07f177' = t.sender_id
+ORDER BY t.created_at DESC;
+
+SELECT 
+    u.username, 
+    t.amount
+FROM transactions t
+JOIN users u ON t.receiver_id = u.id
+WHERE t.receiver_id = 'b7b245bd-965e-466d-9652-5fcece07f177'
+ORDER BY t.created_at DESC;
+
+
+SELECT u.username, t.amount
+FROM transactions t JOIN users u ON t.receiver_id = u.id
+WHERE 
+'b7b245bd-965e-466d-9652-5fcece07f177'
+SELECT t.sender_id
     id, 
     sender_id, 
     receiver_id, 
@@ -71,8 +91,8 @@ CREATE TABLE IF NOT EXISTS inventory (
     user_id UUID REFERENCES users(id) ON DELETE CASCADE,
     item VARCHAR(255) NOT NULL,
     quantity INTEGER DEFAULT 1 CHECK (quantity >= 1),
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT uq_item_user UNIQUE (user_id, item)
 );
 
@@ -100,3 +120,9 @@ RETURNING user_id;
 -- BEFORE UPDATE ON inventory
 -- FOR EACH ROW
 -- EXECUTE FUNCTION update_updated_at_column();
+-- lol
+-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk1MDMwNDgsImlhdCI6MTczOTQxNjY0OCwic3ViIjoiODMwMmE3NmMtNDA1Mi00NzRiLWE5ODQtYjdlZTVlM2QxNWYxIn0.m_53WoYwuQ54p8Pt5Jc095C2tz1a5_k3z2flRHUJdBQ
+-- string
+-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk1MDMxMjUsImlhdCI6MTczOTQxNjcyNSwic3ViIjoiZGU3YzE2ZmMtZWE1MC00ODNjLWExNjMtNWJmMzkzN2EwMTdlIn0.um2BttkCSfKov_tImgvyyeLXrF-gqAEjCOikNLVJb6w
+-- dannamer
+-- eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Mzk1MDMxNjIsImlhdCI6MTczOTQxNjc2Miwic3ViIjoiYjdiMjQ1YmQtOTY1ZS00NjZkLTk2NTItNWZjZWNlMDdmMTc3In0.onaBsviK3ThJ6VvB8QM_ex_E6SVVryfbbraDKZrudcw

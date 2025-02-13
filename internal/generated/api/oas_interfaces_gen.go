@@ -8,3 +8,11 @@ type APIAuthPostRes interface {
 type APIBuyItemGetRes interface {
 	aPIBuyItemGetRes()
 }
+
+type APIInfoGetRes interface {
+	aPIInfoGetRes()
+}
+
+type APISendCoinPostRes interface {
+	aPISendCoinPostRes()
+}

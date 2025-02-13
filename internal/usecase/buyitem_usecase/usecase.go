@@ -1,12 +1,12 @@
 package buyitem_usecase
 
-type BuyItemUsecase struct {
+type buyItemUsecase struct {
 	storage   buyItemStorage
 	trManager trManager
 }
 
-func New(storage buyItemStorage, trManager trManager) *BuyItemUsecase {
-	return &BuyItemUsecase{
+func New(storage buyItemStorage, trManager trManager) *buyItemUsecase {
+	return &buyItemUsecase{
 		storage:   storage,
 		trManager: trManager,
 	}

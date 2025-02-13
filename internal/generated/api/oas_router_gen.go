@@ -110,6 +110,48 @@ func (s *Server) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 				}
 
 				elem = origElem
+			case 'i': // Prefix: "info"
+				origElem := elem
+				if l := len("info"); len(elem) >= l && elem[0:l] == "info" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					// Leaf node.
+					switch r.Method {
+					case "GET":
+						s.handleAPIInfoGetRequest([0]string{}, elemIsEscaped, w, r)
+					default:
+						s.notAllowed(w, r, "GET")
+					}
+
+					return
+				}
+
+				elem = origElem
+			case 's': // Prefix: "sendCoin"
+				origElem := elem
+				if l := len("sendCoin"); len(elem) >= l && elem[0:l] == "sendCoin" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					// Leaf node.
+					switch r.Method {
+					case "POST":
+						s.handleAPISendCoinPostRequest([0]string{}, elemIsEscaped, w, r)
+					default:
+						s.notAllowed(w, r, "POST")
+					}
+
+					return
+				}
+
+				elem = origElem
 			}
 
 			elem = origElem
@@ -253,6 +295,56 @@ func (s *Server) FindPath(method string, u *url.URL) (r Route, _ bool) {
 						r.pathPattern = "/api/buy/{item}"
 						r.args = args
 						r.count = 1
+						return r, true
+					default:
+						return
+					}
+				}
+
+				elem = origElem
+			case 'i': // Prefix: "info"
+				origElem := elem
+				if l := len("info"); len(elem) >= l && elem[0:l] == "info" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					// Leaf node.
+					switch method {
+					case "GET":
+						r.name = APIInfoGetOperation
+						r.summary = "Получить информацию о монетах, инвентаре и истории транзакций."
+						r.operationID = ""
+						r.pathPattern = "/api/info"
+						r.args = args
+						r.count = 0
+						return r, true
+					default:
+						return
+					}
+				}
+
+				elem = origElem
+			case 's': // Prefix: "sendCoin"
+				origElem := elem
+				if l := len("sendCoin"); len(elem) >= l && elem[0:l] == "sendCoin" {
+					elem = elem[l:]
+				} else {
+					break
+				}
+
+				if len(elem) == 0 {
+					// Leaf node.
+					switch method {
+					case "POST":
+						r.name = APISendCoinPostOperation
+						r.summary = "Отправить монеты другому пользователю."
+						r.operationID = ""
+						r.pathPattern = "/api/sendCoin"
+						r.args = args
+						r.count = 0
 						return r, true
 					default:
 						return

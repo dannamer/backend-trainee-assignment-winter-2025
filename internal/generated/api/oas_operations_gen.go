@@ -6,6 +6,8 @@ package api
 type OperationName = string
 
 const (
-	APIAuthPostOperation   OperationName = "APIAuthPost"
-	APIBuyItemGetOperation OperationName = "APIBuyItemGet"
+	APIAuthPostOperation     OperationName = "APIAuthPost"
+	APIBuyItemGetOperation   OperationName = "APIBuyItemGet"
+	APIInfoGetOperation      OperationName = "APIInfoGet"
+	APISendCoinPostOperation OperationName = "APISendCoinPost"
 )

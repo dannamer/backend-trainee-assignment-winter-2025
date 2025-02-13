@@ -22,6 +22,19 @@ type Handler interface {
 	//
 	// GET /api/buy/{item}
 	APIBuyItemGet(ctx context.Context, params APIBuyItemGetParams) (APIBuyItemGetRes, error)
+	// APIInfoGet implements GET /api/info operation.
+	//
+	// Получить информацию о монетах, инвентаре и истории
+	// транзакций.
+	//
+	// GET /api/info
+	APIInfoGet(ctx context.Context) (APIInfoGetRes, error)
+	// APISendCoinPost implements POST /api/sendCoin operation.
+	//
+	// Отправить монеты другому пользователю.
+	//
+	// POST /api/sendCoin
+	APISendCoinPost(ctx context.Context, req *SendCoinRequest) (APISendCoinPostRes, error)
 }
 
 // Server implements http server based on OpenAPI v3 specification and

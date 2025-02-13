@@ -8,22 +8,12 @@ type Info struct {
 	CoinHistory CoinHistory
 }
 
-type Inventory struct {
-	Item     string
-	Quantity int
-}
-
 type CoinHistory struct {
-	Received []Received
-	Sent     []Sent
+	Received []Transaction
+	Sent     []Transaction
 }
 
-type Received struct {
-	FromUser string
-	Amount   decimal.Decimal
-}
-
-type Sent struct {
-	ToUser string
+type Transaction struct {
+	Username string
 	Amount decimal.Decimal
 }

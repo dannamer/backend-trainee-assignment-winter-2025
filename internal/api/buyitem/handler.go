@@ -31,7 +31,7 @@ func (h *BuyItemHandler) APIBuyItemGet(ctx context.Context, params api.APIBuyIte
 			return pointer.To(api.APIBuyItemGetBadRequest(api.ErrorResponse{Errors: api.NewOptString(errors.ErrInsufficientFound.Error())})), nil
 		}
 		if std_errors.Is(err, errors.ErrMerchNotFound) {
-			return pointer.To(api.APIBuyItemGetBadRequest(api.APIAuthPostBadRequest{Errors: api.NewOptString(errors.ErrMerchNotFound.Error())})), nil
+			return pointer.To(api.APIBuyItemGetBadRequest(api.ErrorResponse{Errors: api.NewOptString(errors.ErrMerchNotFound.Error())})), nil
 		}
 		h.log.WithContext(ctx).WithError(err).Error(api.APIBuyItemGetOperation)
 		return pointer.To(api.APIBuyItemGetInternalServerError(api.ErrorResponse{Errors: api.NewOptString(errors.ErrInternal.Error())})), nil

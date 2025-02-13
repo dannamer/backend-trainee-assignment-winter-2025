@@ -32,3 +32,22 @@ func (UnimplementedHandler) APIAuthPost(ctx context.Context, req *AuthRequest) (
 func (UnimplementedHandler) APIBuyItemGet(ctx context.Context, params APIBuyItemGetParams) (r APIBuyItemGetRes, _ error) {
 	return r, ht.ErrNotImplemented
 }
+
+// APIInfoGet implements GET /api/info operation.
+//
+// Получить информацию о монетах, инвентаре и истории
+// транзакций.
+//
+// GET /api/info
+func (UnimplementedHandler) APIInfoGet(ctx context.Context) (r APIInfoGetRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
+
+// APISendCoinPost implements POST /api/sendCoin operation.
+//
+// Отправить монеты другому пользователю.
+//
+// POST /api/sendCoin
+func (UnimplementedHandler) APISendCoinPost(ctx context.Context, req *SendCoinRequest) (r APISendCoinPostRes, _ error) {
+	return r, ht.ErrNotImplemented
+}
