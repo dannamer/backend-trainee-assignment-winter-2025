@@ -206,12 +206,14 @@ components:
         username:
           type: string
           description: Имя пользователя для аутентификации.
-          minLength: 4 # добавил ограничение
+          minLength: 5 # добавил ограничение
+          maxLength: 32
         password:
           type: string
           format: password
           description: Пароль для аутентификации.
-          minLength: 4 # добавил ограничение
+          minLength: 5 # добавил ограничение
+          maxLength: 32
       required:
         - username
         - password
@@ -233,6 +235,7 @@ components:
           type: integer
           description: Количество монет, которые необходимо отправить.
           minimum: 1 # добавил в ограничение
+          maximum: 1000000
       required:
         - toUser
         - amount

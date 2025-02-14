@@ -20,6 +20,7 @@ import (
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/jwt"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/logger"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/middleware"
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/password"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/postgres"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/storage/auth_storage"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/storage/buyitem_storage"
@@ -36,10 +37,12 @@ func main() {
 	log := logger.NewLogger(slog.LevelDebug, "dev", os.Stdout)
 	config := config.MustNewConfigWithEnv()
 	jwt := jwt.New(config.JwtKey())
+	password := password.New()
 
 	pg, err := postgres.New(config.PgUrl())
 	if err != nil {
 		log.WithContext(ctx).WithError(err).Error("failed to connect to postgres")
+		return
 	}
 	defer pg.Close()
 
@@ -50,7 +53,7 @@ func main() {
 	sendCoinStorage := sendcoin_storage.New(pg.Pool)
 	infoStorage := info_storage.New(pg.Pool)
 
-	authUsecase := auth_usecase.New(authStorage, trManager, jwt)
+	authUsecase := auth_usecase.New(authStorage, trManager, jwt, password)
 	buyItemUsecase := buyitem_usecase.New(buyItemStorage, trManager)
 	sendCointUsecase := sendcoin_usecase.New(sendCoinStorage, trManager)
 	infoUsecase := info_usecase.New(infoStorage)
@@ -59,7 +62,7 @@ func main() {
 		AuthHandler:     auth.New(log, authUsecase),
 		BuyItemHandler:  buyitem.New(log, buyItemUsecase),
 		SendCoinHandler: sendcoin.New(log, sendCointUsecase),
-		InfoHandler: info.New(log, infoUsecase),
+		InfoHandler:     info.New(log, infoUsecase),
 	}
 
 	middleware := middleware.New(jwt)

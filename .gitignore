@@ -31,3 +31,4 @@ go.work.sum
 
 # VScode
 .vscode
+main.go

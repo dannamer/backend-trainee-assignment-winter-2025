@@ -12,7 +12,7 @@ type sendCoinStorage interface {
 	GetWalletByUserID(ctx context.Context, userID uuid.UUID) (domain.Wallet, error)
 	GetWalletByUsername(ctx context.Context, username string) (domain.Wallet, error)
 	UpdateWallet(ctx context.Context, wallet domain.Wallet) error
-	SaveTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount decimal.Decimal) error
+	CreateTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount decimal.Decimal) error
 }
 
 type trManager interface {

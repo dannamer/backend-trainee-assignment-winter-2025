@@ -1,4 +1,4 @@
-package buyitem_storage
+package sendcoin_storage
 
 import (
 	"context"
@@ -6,14 +6,14 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
+	"github.com/shopspring/decimal"
 )
 
-func (s *storage) SaveInventory(ctx context.Context, item string, userID uuid.UUID) error {
+func (s *storage) CreateTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount decimal.Decimal) error {
 	query, args, err := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).
-		Insert("inventory").
-		Columns("user_id", "item", "quantity").
-		Values(userID, item, 1).
-		Suffix("ON CONFLICT (user_id, item) DO UPDATE SET quantity = inventory.quantity + 1, updated_at = CURRENT_TIMESTAMP").
+		Insert("transactions").
+		Columns("sender_id", "receiver_id", "amount").
+		Values(senderID, receiverID, amount).
 		ToSql()
 	if err != nil {
 		return fmt.Errorf("failed to build SQL query: %w", err)

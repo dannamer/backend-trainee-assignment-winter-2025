@@ -18,10 +18,8 @@ func (s *storage) GetUserByUsername(ctx context.Context, username string) (domai
 		return domain.User{}, fmt.Errorf("error sql build: %w", err)
 	}
 
-	conn := s.trGetter.DefaultTrOrDB(ctx, s.pg)
-
 	var user domain.User
-	err = conn.QueryRow(ctx, query, args...).Scan(&user.ID, &user.Username, &user.PasswordHash)
+	err = s.pg.QueryRow(ctx, query, args...).Scan(&user.ID, &user.Username, &user.PasswordHash)
 	if err != nil {
 		return domain.User{}, fmt.Errorf("error QueryRow: %w", err)
 	}

@@ -19,10 +19,8 @@ func (s *storage) GetWalletByUserID(ctx context.Context, userID uuid.UUID) (doma
 		return domain.Wallet{}, fmt.Errorf("error sql build: %w", err)
 	}
 
-	conn := s.trGetter.DefaultTrOrDB(ctx, s.pg)
-
 	var wallet domain.Wallet
-	err = conn.QueryRow(ctx, query, args...).Scan(&wallet.ID, &wallet.UserID, &wallet.Balance)
+	err = s.pg.QueryRow(ctx, query, args...).Scan(&wallet.ID, &wallet.UserID, &wallet.Balance)
 	if err != nil {
 		return domain.Wallet{}, fmt.Errorf("error QueryRow: %w", err)
 	}

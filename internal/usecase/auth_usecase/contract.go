@@ -20,3 +20,8 @@ type jwtToken interface {
 type trManager interface {
 	Do(context.Context, func(ctx context.Context) error) error
 }
+
+type password interface {
+	ComparePassword(hashedPassword, password string) error
+	HashPassword(password string) (string, error)
+}

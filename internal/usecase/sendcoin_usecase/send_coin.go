@@ -49,30 +49,15 @@ func (u *sendCoinUsecase) SendCoin(ctx context.Context, toUsername string, userI
 	walletReceiver.Balance = walletReceiver.Balance.Add(amount)
 
 	if err := u.trManager.Do(ctx, func(ctx context.Context) error {
-		// g, gctx = errgroup.WithContext(ctx)
-		// g.Go(func() error {
 		if err := u.storage.UpdateWallet(ctx, walletSender); err != nil {
 			return fmt.Errorf("failed to update wallet: %w", err)
 		}
-		// 	return nil
-		// })
-		// g.Go(func() error {
 		if err := u.storage.UpdateWallet(ctx, walletReceiver); err != nil {
 			return fmt.Errorf("failed to update wallet: %w", err)
 		}
-		// return nil
-		// })
-		// g.Go(func() error {
-		if err := u.storage.SaveTransactions(ctx, walletSender.UserID, walletReceiver.UserID, amount); err != nil {
+		if err := u.storage.CreateTransactions(ctx, walletSender.UserID, walletReceiver.UserID, amount); err != nil {
 			return fmt.Errorf("failed to save transactions: %w", err)
 		}
-		// 	return nil
-		// })
-
-		// if err := g.Wait(); err != nil {
-		// 	return err
-		// }
-
 		return nil
 	}); err != nil {
 		return err

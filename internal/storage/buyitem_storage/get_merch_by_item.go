@@ -21,10 +21,8 @@ func (s *storage) GetMerchByItem(ctx context.Context, item string) (domain.Merch
 		return domain.Merch{}, fmt.Errorf("error sql build: %w", err)
 	}
 
-	conn := s.trGetter.DefaultTrOrDB(ctx, s.pg)
-
 	var merch domain.Merch
-	err = conn.QueryRow(ctx, query, args...).Scan(&merch.ID, &merch.Item, &merch.Price)
+	err = s.pg.QueryRow(ctx, query, args...).Scan(&merch.ID, &merch.Item, &merch.Price)
 	if err != nil {
 		if std_errors.Is(err, pgx.ErrNoRows) {
 			return domain.Merch{}, errors.ErrMerchNotFound

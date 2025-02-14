@@ -11,7 +11,7 @@ type buyItemStorage interface {
 	GetWalletByUserID(ctx context.Context, userID uuid.UUID) (domain.Wallet, error)
 	GetMerchByItem(ctx context.Context, item string) (domain.Merch, error)
 	UpdateWallet(ctx context.Context, wallet domain.Wallet) error
-	SaveInventory(ctx context.Context, item string, userID uuid.UUID) error
+	UpsertInventory(ctx context.Context, item string, userID uuid.UUID) error
 }
 
 type trManager interface {

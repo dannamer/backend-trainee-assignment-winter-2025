@@ -24,11 +24,27 @@ ON CONFLICT (item) DO NOTHING;
 
 CREATE TABLE IF NOT EXISTS users (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-    username VARCHAR(255) UNIQUE NOT NULL,
+    username VARCHAR(32) UNIQUE NOT NULL,
     password VARCHAR(255) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
+## TODO: создать новую ошибку в openapi 409? Как ты думаешь, будущий я
+CREATE OR REPLACE FUNCTION check_user_limit() 
+RETURNS TRIGGER AS $$
+BEGIN
+    IF (SELECT COUNT(*) FROM users) > 100000 THEN
+        RAISE EXCEPTION 'User limit of 100,000 has been reached';
+    END IF;
+    RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+CREATE TRIGGER check_user_limit_trigger
+BEFORE INSERT ON users
+FOR EACH ROW
+EXECUTE FUNCTION check_user_limit();
+
 
 CREATE TABLE IF NOT EXISTS wallet (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,

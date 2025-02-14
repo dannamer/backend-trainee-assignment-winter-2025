@@ -46,7 +46,7 @@ func (u *buyItemUsecase) BuyItem(ctx context.Context, userID uuid.UUID, item str
 		if err := u.storage.UpdateWallet(ctx, wallet); err != nil {
 			return fmt.Errorf("failed to update wallet: %w", err)
 		}
-		if err := u.storage.SaveInventory(ctx, merch.Item, wallet.UserID); err != nil {
+		if err := u.storage.UpsertInventory(ctx, merch.Item, wallet.UserID); err != nil {
 			return fmt.Errorf("failed to save inventory: %w", err)
 		}
 		return nil
