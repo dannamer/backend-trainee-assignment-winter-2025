@@ -7,11 +7,10 @@ import (
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 	"golang.org/x/sync/errgroup"
 )
 
-func (u *sendCoinUsecase) SendCoin(ctx context.Context, toUsername string, userID uuid.UUID, amount decimal.Decimal) error {
+func (u *sendCoinUsecase) SendCoin(ctx context.Context, toUsername string, userID uuid.UUID, amount int) error {
 	g, gctx := errgroup.WithContext(ctx)
 	var walletSender, walletReceiver domain.Wallet
 
@@ -41,12 +40,11 @@ func (u *sendCoinUsecase) SendCoin(ctx context.Context, toUsername string, userI
 		return errors.ErrSelfTransfer
 	}
 
-	if walletSender.Balance.LessThan(amount) {
+	if walletSender.Balance < amount {
 		return errors.ErrInsufficientFound
 	}
-
-	walletSender.Balance = walletSender.Balance.Sub(amount)
-	walletReceiver.Balance = walletReceiver.Balance.Add(amount)
+	walletSender.Balance -= amount
+	walletReceiver.Balance += amount
 
 	if err := u.trManager.Do(ctx, func(ctx context.Context) error {
 		if err := u.storage.UpdateWallet(ctx, walletSender); err != nil {

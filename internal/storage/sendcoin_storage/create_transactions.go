@@ -6,10 +6,9 @@ import (
 
 	"github.com/Masterminds/squirrel"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 )
 
-func (s *storage) CreateTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount decimal.Decimal) error {
+func (s *storage) CreateTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount int) error {
 	query, args, err := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).
 		Insert("transactions").
 		Columns("sender_id", "receiver_id", "amount").

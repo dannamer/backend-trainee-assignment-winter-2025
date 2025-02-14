@@ -33,7 +33,7 @@ func (h *InfoHandler) APIInfoGet(ctx context.Context) (api.APIInfoGetRes, error)
 	}
 
 	response := api.InfoResponse{
-		Coins: api.NewOptInt(int(info.Coin.IntPart())),
+		Coins: api.NewOptInt(info.Coin),
 		Inventory: lo.Map(info.Inventory, func(item domain.Inventory, _ int) api.InfoResponseInventoryItem {
 			return api.InfoResponseInventoryItem{
 				Type: api.OptString{
@@ -55,7 +55,7 @@ func (h *InfoHandler) APIInfoGet(ctx context.Context) (api.APIInfoGetRes, error)
 							Set:   received.Username != "",
 						},
 						Amount: api.OptInt{
-							Value: int(received.Amount.IntPart()),
+							Value: received.Amount,
 							Set:   received.Username != "",
 						},
 					}
@@ -67,7 +67,7 @@ func (h *InfoHandler) APIInfoGet(ctx context.Context) (api.APIInfoGetRes, error)
 							Set:   sent.Username != "",
 						},
 						Amount: api.OptInt{
-							Value: int(sent.Amount.IntPart()),
+							Value: sent.Amount,
 							Set:   sent.Username != "",
 						},
 					}

@@ -5,14 +5,14 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
-	"github.com/google/uuid"
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
-func (s *storage) CreateWallet(ctx context.Context, ID uuid.UUID) error {
+func (s *storage) CreateWallet(ctx context.Context, wallet domain.Wallet) error {
 	query, args, err := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).
 		Insert("wallet").
-		Columns("user_id").
-		Values(ID).
+		Columns("user_id", "balance").
+		Values(wallet.ID, wallet.Balance).
 		ToSql()
 	if err != nil {
 		return fmt.Errorf("error sql build user: %w", err)

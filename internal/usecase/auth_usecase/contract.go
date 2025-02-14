@@ -9,8 +9,8 @@ import (
 
 type authStorage interface {
 	GetUserByUsername(ctx context.Context, username string) (domain.User, error)
-	CreateUser(ctx context.Context, username, passwordHash string) (domain.User, error)
-	CreateWallet(ctx context.Context, ID uuid.UUID) error
+	CreateUser(ctx context.Context, user domain.User) (uuid.UUID, error)
+	CreateWallet(ctx context.Context, wallet domain.Wallet) error
 }
 
 type jwtToken interface {

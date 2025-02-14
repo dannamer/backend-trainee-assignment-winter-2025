@@ -37,10 +37,10 @@ func (u *buyItemUsecase) BuyItem(ctx context.Context, userID uuid.UUID, item str
 		return err
 	}
 
-	if wallet.Balance.LessThan(merch.Price) {
+	if wallet.Balance < merch.Price {
 		return errors.ErrInsufficientFound
 	}
-	wallet.Balance = wallet.Balance.Sub(merch.Price)
+	wallet.Balance -= merch.Price
 
 	if err := u.trManager.Do(ctx, func(ctx context.Context) error {
 		if err := u.storage.UpdateWallet(ctx, wallet); err != nil {

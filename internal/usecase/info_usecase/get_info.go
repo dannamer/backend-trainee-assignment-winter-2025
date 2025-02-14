@@ -6,13 +6,12 @@ import (
 
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/google/uuid"
-	"github.com/shopspring/decimal"
 	"golang.org/x/sync/errgroup"
 )
 
 func (u *infoUsecase) GetInfo(ctx context.Context, userID uuid.UUID) (domain.Info, error) {
 	g, gctx := errgroup.WithContext(ctx)
-	var balance decimal.Decimal
+	var balance int
 	var inventory []domain.Inventory
 	var sentTransaction, receivedTransaction []domain.Transaction
 

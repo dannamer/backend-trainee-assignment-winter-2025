@@ -3,22 +3,26 @@ package auth_usecase
 import (
 	"context"
 	"fmt"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
 func (u *authUsecase) Auth(ctx context.Context, username, password string) (string, error) {
 	user, err := u.storage.GetUserByUsername(ctx, username)
 	if err != nil {
-		passwordHash, err := u.password.HashPassword(password)
+		user.PasswordHash, err = u.password.HashPassword(password)
 		if err != nil {
 			return "", fmt.Errorf("error hashPassword: %w", err)
 		}
-
 		if err := u.trManager.Do(ctx, func(ctx context.Context) error {
-			if user, err = u.storage.CreateUser(ctx, username, passwordHash); err != nil {
+			if user.ID, err = u.storage.CreateUser(ctx, user); err != nil {
 				return fmt.Errorf("error CreateUser: %w", err)
 			}
-
-			if err = u.storage.CreateWallet(ctx, user.ID); err != nil {
+			wallet := domain.Wallet{
+				UserID: user.ID,
+				Balance: 1000,
+			}
+			if err = u.storage.CreateWallet(ctx, wallet); err != nil {
 				return fmt.Errorf("error CreateWallet: %w", err)
 			}
 			return nil

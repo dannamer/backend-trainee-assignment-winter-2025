@@ -1,9 +1,7 @@
 package domain
 
-import "github.com/shopspring/decimal"
-
 type Info struct {
-	Coin        decimal.Decimal
+	Coin        int
 	Inventory   []Inventory
 	CoinHistory CoinHistory
 }
@@ -15,5 +13,5 @@ type CoinHistory struct {
 
 type Transaction struct {
 	Username string
-	Amount decimal.Decimal
+	Amount   int
 }
