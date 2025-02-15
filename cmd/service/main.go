@@ -39,7 +39,7 @@ func main() {
 	jwt := jwt.New(config.JwtKey())
 	password := password.New()
 
-	pg, err := postgres.New(config.PgUrl())
+	pg, err := postgres.New(ctx, config.PgUrl())
 	if err != nil {
 		log.WithContext(ctx).WithError(err).Error("failed to connect to postgres")
 		return

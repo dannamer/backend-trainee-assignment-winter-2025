@@ -3,7 +3,7 @@ CREATE EXTENSION IF NOT EXISTS pgcrypto;
 CREATE TABLE IF NOT EXISTS merch_store (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     item VARCHAR(255) UNIQUE NOT NULL,
-    price INTEGER NOT NULL,
+    price BIGINT NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -14,7 +14,7 @@ VALUES
     ('cup', 20),
     ('book', 50),
     ('pen', 10),
-    ('powerbank', 200),
+    ('pobookwerbank', 200),
     ('hoody', 300),
     ('umbrella', 200),
     ('socks', 10),
@@ -34,7 +34,7 @@ CREATE TABLE IF NOT EXISTS users (
 CREATE TABLE IF NOT EXISTS wallet (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     user_id UUID NOT NULL REFERENCES users(id) ON DELETE CASCADE,
-    balance INTEGER NOT NULL CHECK (balance >= 0),
+    balance BIGINT NOT NULL CHECK (balance >= 0),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
@@ -43,7 +43,7 @@ CREATE TABLE IF NOT EXISTS transactions (
     id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
     sender_id UUID REFERENCES users(id) ON DELETE CASCADE,
     receiver_id UUID REFERENCES users(id) ON DELETE CASCADE,
-    amount INTEGER NOT NULL CHECK (amount > 0),
+    amount BIGINT NOT NULL CHECK (amount > 0),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
@@ -56,7 +56,3 @@ CREATE TABLE IF NOT EXISTS inventory (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
     CONSTRAINT uq_item_user UNIQUE (user_id, item)
 );
-
-CREATE INDEX IF NOT EXISTS idx_inventory_user_id ON inventory(user_id);
-
-CREATE INDEX IF NOT EXISTS idx_inventory_item ON inventory(item);

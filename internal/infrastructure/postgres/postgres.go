@@ -36,7 +36,7 @@ type Postgres struct {
 	Pool         PgxPool
 }
 
-func New(url string, opts ...Option) (*Postgres, error) {
+func New(ctx context.Context, url string, opts ...Option) (*Postgres, error) {
 	pg := &Postgres{
 		maxPoolSize:  defaultMaxPoolSize,
 		connAttempts: defaultConnAttempts,
@@ -56,7 +56,7 @@ func New(url string, opts ...Option) (*Postgres, error) {
 
 	var pool *pgxpool.Pool
 	for pg.connAttempts > 0 {
-		pool, err = pgxpool.NewWithConfig(context.Background(), poolConfig)
+		pool, err = pgxpool.NewWithConfig(ctx, poolConfig)
 		if err == nil {
 			break
 		}
@@ -67,6 +67,10 @@ func New(url string, opts ...Option) (*Postgres, error) {
 
 	if err != nil {
 		return nil, fmt.Errorf("pgdb - New - pgxpool.ConnectConfig: %w", err)
+	}
+
+	if err = pool.Ping(ctx); err != nil {
+		return nil, err
 	}
 
 	pg = &Postgres{
