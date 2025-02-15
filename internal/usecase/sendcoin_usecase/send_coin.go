@@ -10,7 +10,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func (u *sendCoinUsecase) SendCoin(ctx context.Context, toUsername string, userID uuid.UUID, amount int) error {
+func (u *SendCoinUsecase) SendCoin(ctx context.Context, toUsername string, userID uuid.UUID, amount int64) error {
 	g, gctx := errgroup.WithContext(ctx)
 	var walletSender, walletReceiver domain.Wallet
 
