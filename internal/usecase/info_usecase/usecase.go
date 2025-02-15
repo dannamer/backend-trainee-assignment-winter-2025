@@ -1,11 +1,11 @@
 package info_usecase
 
-type infoUsecase struct {
+type InfoUsecase struct {
 	storage   infoStorage
 }
 
-func New(storage infoStorage) *infoUsecase {
-	return &infoUsecase{
+func New(storage infoStorage) *InfoUsecase {
+	return &InfoUsecase{
 		storage:   storage,
 	}
 }

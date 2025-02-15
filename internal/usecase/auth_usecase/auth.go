@@ -7,9 +7,10 @@ import (
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
-func (u *authUsecase) Auth(ctx context.Context, username, password string) (string, error) {
+func (u *AuthUsecase) Auth(ctx context.Context, username, password string) (string, error) {
 	user, err := u.storage.GetUserByUsername(ctx, username)
 	if err != nil {
+		user.Username = username
 		user.PasswordHash, err = u.password.HashPassword(password)
 		if err != nil {
 			return "", fmt.Errorf("error hashPassword: %w", err)

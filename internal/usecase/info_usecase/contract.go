@@ -8,7 +8,7 @@ import (
 )
 
 type infoStorage interface {
-	GetWalletBalanceByUserID(ctx context.Context, userID uuid.UUID) (int, error)
+	GetWalletBalanceByUserID(ctx context.Context, userID uuid.UUID) (int64, error)
 	GetInventoryByUserID(ctx context.Context, userID uuid.UUID) ([]domain.Inventory, error)
 	GetReceivedTransactionsByUserID(ctx context.Context, userID uuid.UUID) ([]domain.Transaction, error)
 	GetSentTransactionsByUserID(ctx context.Context, userID uuid.UUID) ([]domain.Transaction, error)

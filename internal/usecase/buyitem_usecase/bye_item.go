@@ -10,7 +10,7 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func (u *buyItemUsecase) BuyItem(ctx context.Context, userID uuid.UUID, item string) error {
+func (u *BuyItemUsecase) BuyItem(ctx context.Context, userID uuid.UUID, item string) error {
 	g, gctx := errgroup.WithContext(ctx)
 	var merch domain.Merch
 	var wallet domain.Wallet

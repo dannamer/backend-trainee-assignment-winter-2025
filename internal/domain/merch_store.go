@@ -7,5 +7,5 @@ import (
 type Merch struct {
 	ID    uuid.UUID
 	Item  string
-	Price int
+	Price int64
 }

@@ -7,5 +7,5 @@ import (
 )
 
 type sendcoinUsecase interface {
-	SendCoin(ctx context.Context, toUsername string, userID uuid.UUID, amout int) error
+	SendCoin(ctx context.Context, toUsername string, userID uuid.UUID, amout int64) error
 }

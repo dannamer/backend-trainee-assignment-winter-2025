@@ -7,5 +7,5 @@ import (
 type Wallet struct {
 	ID      uuid.UUID
 	UserID  uuid.UUID
-	Balance int
+	Balance int64
 }

@@ -1,7 +1,7 @@
 package domain
 
 type Info struct {
-	Coin        int
+	Coin        int64
 	Inventory   []Inventory
 	CoinHistory CoinHistory
 }
@@ -13,5 +13,5 @@ type CoinHistory struct {
 
 type Transaction struct {
 	Username string
-	Amount   int
+	Amount   int64
 }

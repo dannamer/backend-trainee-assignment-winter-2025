@@ -9,9 +9,9 @@ import (
 	"golang.org/x/sync/errgroup"
 )
 
-func (u *infoUsecase) GetInfo(ctx context.Context, userID uuid.UUID) (domain.Info, error) {
+func (u *InfoUsecase) GetInfo(ctx context.Context, userID uuid.UUID) (domain.Info, error) {
 	g, gctx := errgroup.WithContext(ctx)
-	var balance int
+	var balance int64
 	var inventory []domain.Inventory
 	var sentTransaction, receivedTransaction []domain.Transaction
 

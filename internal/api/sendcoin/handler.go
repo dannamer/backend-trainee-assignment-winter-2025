@@ -26,7 +26,7 @@ func New(log logger.Log, usecase sendcoinUsecase) *SendCoinHandler {
 
 func (h *SendCoinHandler) APISendCoinPost(ctx context.Context, req *api.SendCoinRequest) (api.APISendCoinPostRes, error) {
 	userID, _ := ctx.Value(domain.UserIDKey).(uuid.UUID)
-	if err := h.usecase.SendCoin(ctx, req.GetToUser(), userID, req.GetAmount()); err != nil {
+	if err := h.usecase.SendCoin(ctx, req.GetToUser(), userID, int64(req.GetAmount())); err != nil {
 		if std_errors.Is(err, errors.ErrUserNotFound) {
 			return pointer.To(api.APISendCoinPostBadRequest(api.ErrorResponse{Errors: api.NewOptString(errors.ErrUserNotFound.Error())})), nil
 		}

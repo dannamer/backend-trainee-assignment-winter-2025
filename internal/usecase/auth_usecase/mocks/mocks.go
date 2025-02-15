@@ -37,32 +37,32 @@ func (m *MockauthStorage) EXPECT() *MockauthStorageMockRecorder {
 }
 
 // CreateUser mocks base method.
-func (m *MockauthStorage) CreateUser(ctx context.Context, username, passwordHash string) (domain.User, error) {
+func (m *MockauthStorage) CreateUser(ctx context.Context, user domain.User) (uuid.UUID, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateUser", ctx, username, passwordHash)
-	ret0, _ := ret[0].(domain.User)
+	ret := m.ctrl.Call(m, "CreateUser", ctx, user)
+	ret0, _ := ret[0].(uuid.UUID)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // CreateUser indicates an expected call of CreateUser.
-func (mr *MockauthStorageMockRecorder) CreateUser(ctx, username, passwordHash interface{}) *gomock.Call {
+func (mr *MockauthStorageMockRecorder) CreateUser(ctx, user interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockauthStorage)(nil).CreateUser), ctx, username, passwordHash)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateUser", reflect.TypeOf((*MockauthStorage)(nil).CreateUser), ctx, user)
 }
 
 // CreateWallet mocks base method.
-func (m *MockauthStorage) CreateWallet(ctx context.Context, ID uuid.UUID) error {
+func (m *MockauthStorage) CreateWallet(ctx context.Context, wallet domain.Wallet) error {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "CreateWallet", ctx, ID)
+	ret := m.ctrl.Call(m, "CreateWallet", ctx, wallet)
 	ret0, _ := ret[0].(error)
 	return ret0
 }
 
 // CreateWallet indicates an expected call of CreateWallet.
-func (mr *MockauthStorageMockRecorder) CreateWallet(ctx, ID interface{}) *gomock.Call {
+func (mr *MockauthStorageMockRecorder) CreateWallet(ctx, wallet interface{}) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateWallet", reflect.TypeOf((*MockauthStorage)(nil).CreateWallet), ctx, ID)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "CreateWallet", reflect.TypeOf((*MockauthStorage)(nil).CreateWallet), ctx, wallet)
 }
 
 // GetUserByUsername mocks base method.

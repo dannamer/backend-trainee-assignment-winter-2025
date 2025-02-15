@@ -8,7 +8,7 @@ import (
 	"github.com/google/uuid"
 )
 
-func (s *storage) CreateTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount int) error {
+func (s *storage) CreateTransactions(ctx context.Context, senderID, receiverID uuid.UUID, amount int64) error {
 	query, args, err := squirrel.StatementBuilder.PlaceholderFormat(squirrel.Dollar).
 		Insert("transactions").
 		Columns("sender_id", "receiver_id", "amount").
