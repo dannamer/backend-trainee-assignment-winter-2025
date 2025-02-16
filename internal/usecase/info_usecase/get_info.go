@@ -4,9 +4,10 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
 func (u *InfoUsecase) GetInfo(ctx context.Context, userID uuid.UUID) (domain.Info, error) {

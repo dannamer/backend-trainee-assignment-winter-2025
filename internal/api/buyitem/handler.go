@@ -5,11 +5,12 @@ import (
 	std_errors "errors"
 
 	"github.com/AlekSi/pointer"
+	"github.com/google/uuid"
+
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/generated/api"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/logger"
-	"github.com/google/uuid"
 )
 
 type BuyItemHandler struct {

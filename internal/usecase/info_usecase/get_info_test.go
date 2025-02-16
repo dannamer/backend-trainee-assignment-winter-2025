@@ -5,13 +5,13 @@ import (
 	std_errors "errors"
 	"testing"
 
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/usecase/info_usecase"
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/usecase/info_usecase/mocks"
-
 	"github.com/golang/mock/gomock"
 	"github.com/google/uuid"
 	"github.com/stretchr/testify/assert"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/usecase/info_usecase"
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/usecase/info_usecase/mocks"
 )
 
 func setupTest(t *testing.T) (*gomock.Controller, *mocks.MockinfoStorage, *info_usecase.InfoUsecase) {

@@ -6,9 +6,10 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
+	"github.com/jackc/pgx/v5"
+
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
-	"github.com/jackc/pgx/v5"
 )
 
 func (s *storage) GetMerchByItem(ctx context.Context, item string) (domain.Merch, error) {

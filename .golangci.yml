@@ -1,0 +1,17 @@
+# More info on config here: https://github.com/golangci/golangci-lint#config-file
+linters:
+  disable-all: true
+  enable:
+    - gci
+    - errcheck
+    - gosimple
+    - ineffassign
+    - unused
+
+linters-settings:
+  gci:
+    sections:
+      - standard
+      - default
+      - prefix(github.com/dannamer/backend-trainee-assignment-winter-2025)
+    skip-generated: true

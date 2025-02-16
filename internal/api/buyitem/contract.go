@@ -6,7 +6,6 @@ import (
 	"github.com/google/uuid"
 )
 
-
 type buyItemUsecase interface {
-	BuyItem(ctx context.Context, userID uuid.UUID, item string) error 
+	BuyItem(ctx context.Context, userID uuid.UUID, item string) error
 }

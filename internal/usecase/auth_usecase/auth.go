@@ -5,8 +5,9 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/jackc/pgx/v5"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
 func (u *AuthUsecase) Auth(ctx context.Context, username, password string) (string, error) {

@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
+
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 

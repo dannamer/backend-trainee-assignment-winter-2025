@@ -2,6 +2,7 @@ package sendcoin_storage
 
 import (
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/postgres"
 )
 

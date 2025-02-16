@@ -3,8 +3,9 @@ package sendcoin_usecase
 import (
 	"context"
 
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/google/uuid"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
 type sendCoinStorage interface {

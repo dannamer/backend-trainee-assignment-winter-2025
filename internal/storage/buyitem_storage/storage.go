@@ -1,18 +1,19 @@
 package buyitem_storage
 
 import (
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/postgres"
 	trmpgx "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/postgres"
 )
 
 type storage struct {
-	pg postgres.PgxPool
+	pg       postgres.PgxPool
 	trGetter *trmpgx.CtxGetter
 }
 
 func New(pg postgres.PgxPool) *storage {
 	return &storage{
-		pg: pg,
+		pg:       pg,
 		trGetter: trmpgx.DefaultCtxGetter,
 	}
 }

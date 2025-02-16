@@ -5,6 +5,7 @@ import (
 	std_errors "errors"
 
 	"github.com/AlekSi/pointer"
+
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/generated/api"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/logger"

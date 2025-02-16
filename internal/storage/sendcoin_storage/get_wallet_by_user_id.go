@@ -5,8 +5,9 @@ import (
 	"fmt"
 
 	"github.com/Masterminds/squirrel"
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/google/uuid"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 )
 
 func (s *storage) GetWalletByUserID(ctx context.Context, userID uuid.UUID) (domain.Wallet, error) {

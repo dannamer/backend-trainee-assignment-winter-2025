@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
+	trmpgxs "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 
-	trmpgxs "github.com/avito-tech/go-transaction-manager/drivers/pgxv5/v2"
 	serviceapi "github.com/dannamer/backend-trainee-assignment-winter-2025/internal/api"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/api/auth"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/api/buyitem"

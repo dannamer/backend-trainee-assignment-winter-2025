@@ -4,10 +4,11 @@ import (
 	"context"
 	"fmt"
 
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 	"github.com/google/uuid"
 	"golang.org/x/sync/errgroup"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 )
 
 func (u *BuyItemUsecase) BuyItem(ctx context.Context, userID uuid.UUID, item string) error {

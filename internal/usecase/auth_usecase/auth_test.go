@@ -5,14 +5,14 @@ import (
 	"errors"
 	"testing"
 
+	"github.com/golang/mock/gomock"
+	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
+	"github.com/stretchr/testify/assert"
+
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/domain"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/usecase/auth_usecase"
 	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/usecase/auth_usecase/mocks"
-	"github.com/jackc/pgx/v5"
-
-	"github.com/golang/mock/gomock"
-	"github.com/google/uuid"
-	"github.com/stretchr/testify/assert"
 )
 
 func setupTest(t *testing.T) (*gomock.Controller, *mocks.MockauthStorage, *mocks.MockjwtToken, *mocks.MocktrManager, *mocks.Mockpassword, *auth_usecase.AuthUsecase) {

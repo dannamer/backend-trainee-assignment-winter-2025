@@ -6,8 +6,9 @@ import (
 	"encoding/base64"
 	std_errors "errors"
 
-	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 	"golang.org/x/crypto/argon2"
+
+	"github.com/dannamer/backend-trainee-assignment-winter-2025/internal/infrastructure/errors"
 )
 
 type hasher struct {
