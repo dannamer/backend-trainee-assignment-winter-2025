@@ -6,6 +6,9 @@ import (
 	"log/slog"
 	"net/http"
 	"os"
+	"os/signal"
+	"syscall"
+	"time"
 
 	"github.com/avito-tech/go-transaction-manager/trm/v2/manager"
 
@@ -75,8 +78,32 @@ func main() {
 
 	log.WithContext(ctx).Info("server start")
 
-	if err := http.ListenAndServe(fmt.Sprintf(":%s", config.HttpPort()), server); err != nil {
-		log.WithContext(ctx).WithError(err).Error("failed to start server")
-		os.Exit(1)
+	srvAddr := fmt.Sprintf(":%s", config.HttpPort())
+	httpServer := &http.Server{
+		Addr:    srvAddr,
+		Handler: server,
 	}
+
+	quit := make(chan os.Signal, 1)
+	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
+
+	go func() {
+		if err := httpServer.ListenAndServe(); err != nil && err != http.ErrServerClosed {
+			log.WithContext(ctx).WithError(err).Error("failed to start server")
+			os.Exit(1)
+		}
+	}()
+
+	<-quit
+	log.WithContext(ctx).Info("Shutdown signal received, starting graceful shutdown...")
+
+	shutdownCtx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	if err := httpServer.Shutdown(shutdownCtx); err != nil {
+		log.WithContext(ctx).WithError(err).Error("Server forced to shutdown")
+	} else {
+		log.WithContext(ctx).Info("Server gracefully shut down")
+	}
+
 }

@@ -16,7 +16,7 @@ func New(jwt jwtToken) *Middleware {
 		jwt: jwt,
 	}
 }
-// TODO: баг с удалением пользователя
+
 func (h *Middleware) HandleBearerAuth(ctx context.Context, operationName api.OperationName, t api.BearerAuth) (context.Context, error) {
 	id, err := h.jwt.GetUserIDFromToken(t.GetToken())
 	if err != nil {

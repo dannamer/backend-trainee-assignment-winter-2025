@@ -10,22 +10,6 @@ import (
 
 const baseURL = "http://localhost:8080"
 
-type AuthResponse struct {
-	Token string `json:"token"`
-}
-
-type InfoResponse struct {
-	Coins     int `json:"coins"`
-	Inventory []struct {
-		Type     string `json:"type"`
-		Quantity int    `json:"quantity"`
-	} `json:"inventory"`
-}
-
-type ErrorResponse struct {
-	Errors string `json:"errors"`
-}
-
 func authenticateUser(e *httpexpect.Expect, username, password string) string {
 	resp := e.POST("/api/auth").
 		WithJSON(map[string]string{
@@ -39,7 +23,7 @@ func authenticateUser(e *httpexpect.Expect, username, password string) string {
 	return resp.Value("token").String().Raw()
 }
 
-func TestE2E(t *testing.T) {
+func TestE2E_SendCoins(t *testing.T) {
 	e := httpexpect.New(t, baseURL)
 
 	token1 := authenticateUser(e, "user1", "password123")
@@ -70,6 +54,12 @@ func TestE2E(t *testing.T) {
 
 	coinsAfter := infoAfter.Value("coins").Number().Raw()
 	require.Equal(t, coinsBefore-10, coinsAfter)
+}
+
+func TestE2E_BuyMerch(t *testing.T) {
+	e := httpexpect.New(t, baseURL)
+
+	token1 := authenticateUser(e, "user1", "password123")
 
 	e.GET("/api/buy/cup").
 		WithHeader("Authorization", "Bearer "+token1).

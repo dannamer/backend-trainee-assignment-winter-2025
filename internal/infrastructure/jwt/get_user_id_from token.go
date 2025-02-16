@@ -12,28 +12,28 @@ func (j *JwtToken) GetUserIDFromToken(token string) (uuid.UUID, error) {
 		token,
 		func(token *jwt.Token) (interface{}, error) {
 			if token.Method != jwt.SigningMethodHS256 {
-				return nil, fmt.Errorf("неожиданный метод подписи: %v", token.Header["alg"])
+				return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
 			}
 			return []byte(j.JwtKey), nil
 		},
 	)
 	if err != nil {
-		return uuid.UUID{}, fmt.Errorf("не удалось распарсить токен: %w", err)
+		return uuid.UUID{}, fmt.Errorf("failed to parse token: %w", err)
 	}
 
 	claims, ok := parsedToken.Claims.(jwt.MapClaims)
 	if !ok || !parsedToken.Valid {
-		return uuid.UUID{}, fmt.Errorf("невалидный токен")
+		return uuid.UUID{}, fmt.Errorf("invalid token")
 	}
 
 	sub, ok := claims["sub"].(string)
 	if !ok {
-		return uuid.UUID{}, fmt.Errorf("id не найден в токене")
+		return uuid.UUID{}, fmt.Errorf("id not found in token")
 	}
 
 	id, err := uuid.Parse(sub)
 	if err != nil {
-		return uuid.UUID{}, fmt.Errorf("неверный формат ID в токене: %w", err)
+		return uuid.UUID{}, fmt.Errorf("invalid ID format in token: %w", err)
 	}
 	return id, nil
 }
